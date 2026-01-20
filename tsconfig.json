@@ -12,7 +12,6 @@
     "skipLibCheck": true,
     "types": [
       "node",
-      "./types/env.d.ts",
       "jest",
       "supertest"
     ],
