@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YASVANTH | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;700;900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #e3ebf2;
+            --bg-dark-navy: #020b1d;
+            --accent-black: #050505;
+            --accent-cyan: #00d2ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: var(--bg-light);
+            color: var(--accent-black);
+            scroll-behavior: smooth;
+        }
+
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+            color: transparent;
+        }
+
+        .entrance-anim {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes subtle-float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .animate-float {
+            animation: subtle-float 6s ease-in-out infinite;
+        }
+
+        /* Shimmer Animation */
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-150%) skewX(-25deg);
+            }
+
+            100% {
+                transform: translateX(150%) skewX(-25deg);
+            }
+        }
+
+        .animate-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animate-shimmer::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        /* Pulsing Glow */
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(0, 210, 255, 0.5);
+            }
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        /* Marine Floating Animation */
+        @keyframes marine-float {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1.0;
+            }
+
+            50% {
+                transform: translateY(-50vh) translateX(var(--drift-x)) scale(1.2);
+                opacity: 0.9;
+            }
+
+            90% {
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: translateY(-115vh) translateX(calc(var(--drift-x) * 0.7)) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+        /* Caustics Light Refraction */
+        @keyframes caustics {
+            0% {
+                opacity: 0.3;
+                transform: scale(1) translate(0, 0) rotate(0deg);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.25) translate(4%, 3%) rotate(3deg);
+            }
+
+            100% {
+                opacity: 0.3;
+                transform: scale(1) translate(0, 0) rotate(0deg);
+            }
+        }
+
+        /* Parallax Wave Animation */
+        @keyframes wave-parallax {
+            0% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(-25%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .marine-particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: marine-float linear infinite;
+        }
+
+        /* Vibrant Border Effect */
+        @keyframes vibrant-border {
+            0% {
+                border-color: #007cf0;
+                box-shadow: 0 0 15px rgba(0, 124, 240, 0.2);
+            }
+
+            33% {
+                border-color: #00d2ff;
+                box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+            }
+
+            66% {
+                border-color: #4b9dea;
+                box-shadow: 0 0 15px rgba(75, 157, 234, 0.2);
+            }
+
+            100% {
+                border-color: #007cf0;
+                box-shadow: 0 0 15px rgba(0, 124, 240, 0.2);
+            }
+        }
+
+        .vibrant-border {
+            border: 1px solid transparent;
+            animation: vibrant-border 8s ease-in-out infinite;
+        }
+
+        /* Continuous Caustics Animation */
+        @keyframes caustics-move {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(-2%, -2%);
+            }
+        }
+
+        .caustics-layer {
+            animation: caustics-move 30s linear infinite alternate;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark-navy);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4b9dea;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-cyan);
+        }
+
+        * {
+            -webkit-backdrop-filter: inherit;
+            backdrop-filter: inherit;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    maxWidth: {
+                        container: "1280px",
+                    },
+                    animation: {
+                        first: "moveVertical 30s ease infinite",
+                        second: "moveInCircle 20s reverse infinite",
+                        third: "moveInCircle 40s linear infinite",
+                        fourth: "moveHorizontal 40s ease infinite",
+                        fifth: "moveInCircle 20s ease infinite",
+                        marquee: 'marquee var(--duration) linear infinite',
+                    },
+                    keyframes: {
+                        moveVertical: {
+                            "0%": { transform: "translateY(-50%)" },
+                            "50%": { transform: "translateY(50%)" },
+                            "100%": { transform: "translateY(-50%)" },
+                        },
+                        moveInCircle: {
+                            "0%": { transform: "rotate(0deg)" },
+                            "50%": { transform: "rotate(180deg)" },
+                            "100%": { transform: "rotate(360deg)" },
+                        },
+                        moveHorizontal: {
+                            "0%": { transform: "translateX(-50%) translateY(-10%)" },
+                            "50%": { transform: "translateX(50%) translateY(10%)" },
+                            "100%": { transform: "translateX(-50%) translateY(-10%)" },
+                        },
+                        marquee: {
+                            from: { transform: 'translateX(0)' },
+                            to: { transform: 'translateX(calc(-100% - var(--gap)))' }
+                        }
+                    },
+                },
+            },
+        };
+    </script>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-icons/fa": "https://esm.sh/react-icons@5.0.1/fa",
+    "framer-motion": "https://esm.sh/framer-motion@^12.4.7",
+    "class-variance-authority": "https://esm.sh/class-variance-authority@^0.7.1",
+    "@radix-ui/react-slot": "https://esm.sh/@radix-ui/react-slot@^1.1.2",
+    "@radix-ui/react-avatar": "https://esm.sh/@radix-ui/react-avatar@^1.1.3",
+    "react-icons/": "https://esm.sh/react-icons@^5.5.0/"
+  }
+}
+</script>
+</head>
+
+<body class="selection:bg-black selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
