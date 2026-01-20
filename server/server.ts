@@ -477,16 +477,22 @@ app.post('/api/contact', async (req, res, next) => {
       `
     });
 
-    // Also keep local log
-    const logEntry = `[${new Date().toISOString()}] EMAIL SENT FROM: ${name} (${email}) TO: ${adminEmail}\n`;
-    fs.appendFileSync(path.join(process.cwd(), 'messages.log'), logEntry);
+    // Also keep local log if not in production
+    const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+    if (!isProd) {
+      const logEntry = `[${new Date().toISOString()}] EMAIL SENT FROM: ${name} (${email}) TO: ${adminEmail}\n`;
+      fs.appendFileSync(path.join(process.cwd(), 'messages.log'), logEntry);
+    }
 
     console.log(`Email successfully sent from ${name} to ${adminEmail}`);
     res.json({ success: true });
   } catch (error) {
     console.error('Email Error:', error);
     // Log failures too
-    fs.appendFileSync(path.join(process.cwd(), 'messages.log'), `[${new Date().toISOString()}] EMAIL FAILED: ${error}\n`);
+    const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+    if (!isProd) {
+      fs.appendFileSync(path.join(process.cwd(), 'messages.log'), `[${new Date().toISOString()}] EMAIL FAILED: ${error}\n`);
+    }
     next(error);
   }
 });

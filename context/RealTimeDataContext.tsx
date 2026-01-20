@@ -405,7 +405,6 @@ export const RealTimeDataProvider: React.FC<{ children: ReactNode }> = ({ childr
   };
 
   const setupRealTimeUpdates = useCallback(() => {
-    const { supabase } = require('../lib/supabase.ts');
 
     // Subscribe to all changes on the public schema
     const channel = supabase
