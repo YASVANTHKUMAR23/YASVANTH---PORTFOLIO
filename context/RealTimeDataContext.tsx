@@ -199,7 +199,7 @@ export const RealTimeDataProvider: React.FC<{ children: ReactNode }> = ({ childr
     return res.json();
   }, [logout]);
 
-  const fetchInitialData = async () => {
+  const fetchInitialData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -234,11 +234,11 @@ export const RealTimeDataProvider: React.FC<{ children: ReactNode }> = ({ childr
       setError('Failed to load data. Please refresh the page.');
       setLoading(false);
     }
-  };
+  }, []);
 
-  const refreshData = () => {
+  const refreshData = useCallback(() => {
     fetchInitialData();
-  };
+  }, [fetchInitialData]);
 
   const updatePageHeader = async (page: keyof SiteData['pageHeaders'], header: PageHeader) => {
     setData(prev => ({ ...prev, pageHeaders: { ...prev.pageHeaders, [page]: header } }));

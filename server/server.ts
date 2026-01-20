@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
@@ -16,13 +17,11 @@ import {
   AnimatedTitleSchema
 } from './schemas.ts';
 import { z } from 'zod';
-import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import nodemailer from 'nodemailer';
 
-dotenv.config();
 
 export const app = express();
 const PORT: number = Number(process.env.PORT) || 3001;

@@ -1,9 +1,8 @@
+import 'dotenv/config';
 import Database from 'better-sqlite3';
 import { supabase } from '../lib/supabase.ts';
 import path from 'path';
-import dotenv from 'dotenv';
 
-dotenv.config();
 
 const DB_PATH = path.join(process.cwd(), 'db', 'portfolio.db');
 const sqlite = new Database(DB_PATH);
