@@ -1,7 +1,7 @@
 {
   "name": "yasvanth-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,8 @@
     "migrate": "ts-node db/migrate.ts",
     "seed": "ts-node db/seed.ts",
     "server": "tsx server/server.ts",
-    "start": "concurrently \"npm run dev\" \"npm run server\""
+    "start": "concurrently \"npm run dev\" \"npm run server\"",
+    "deploy:frontend": "npm run build && echo 'Ready for Vercel/Netlify deployment'"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.3",

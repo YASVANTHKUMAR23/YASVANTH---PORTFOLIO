@@ -22,7 +22,7 @@ const SectionDivider = () => <div className="w-full h-px bg-gradient-to-r from-t
 const AppContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<'home' | 'projects' | 'certificates' | 'contact' | 'about' | 'admin' | 'dashboard'>('home');
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const { data, loading, error, isAuthenticated } = useRealTimeData();
+  const { data, loading, error, isAuthenticated, isOffline } = useRealTimeData();
 
   const navigate = useCallback((page: string) => {
     const target = page.replace('#', '') as any;
@@ -160,12 +160,20 @@ const AppContent: React.FC = () => {
         <div className="text-center max-w-md px-4 relative z-10">
           <h2 className="text-2xl font-bold text-red-500 mb-4">Transmission Error</h2>
           <p className="text-gray-400 mb-6">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-500 transition-all font-black uppercase tracking-widest text-[10px]"
-          >
-            Reconnect
-          </button>
+          <div className="flex flex-col gap-4">
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-500 transition-all font-black uppercase tracking-widest text-[10px]"
+            >
+              Reconnect
+            </button>
+            <button
+              onClick={() => window.location.href = '/?mode=offline'}
+              className="text-gray-500 hover:text-white transition-all font-black uppercase tracking-widest text-[10px]"
+            >
+              Continue in Offline Mode
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -180,6 +188,13 @@ const AppContent: React.FC = () => {
 
       {!isAuthView && (
         <div className="relative z-10">
+          {isOffline && (
+            <div className="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-center">
+              <span className="text-[10px] uppercase tracking-[0.3em] font-black text-amber-500">
+                ⚠️ Studio Offline Mode — Using Architectural Mock Data
+              </span>
+            </div>
+          )}
           <Navbar activePage={currentPage} onNavigate={navigate} />
 
           <main
@@ -337,6 +352,9 @@ const AppContent: React.FC = () => {
                 <p className="opacity-40">STAY CONNECTED</p>
                 <p className="text-white font-black uppercase">{siteData.email}</p>
               </div>
+            </div>
+            <div className="max-w-7xl mx-auto mt-12 flex justify-center opacity-20 hover:opacity-100 transition-opacity">
+              <span className="px-3 py-1 bg-white/10 rounded-full text-[8px] font-black">v1.1.0-STABLE</span>
             </div>
           </footer>
         </div>

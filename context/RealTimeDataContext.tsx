@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { supabase } from '../lib/supabase.ts';
+import { MOCK_DATA } from '../lib/mockData';
+
 
 interface Project {
   id: number;
@@ -93,6 +95,7 @@ interface RealTimeDataContextType {
   updateSocialLink: (platform: string, url: string) => Promise<void>;
   updateSettings: (key: string, value: any) => Promise<void>;
   setIsPaused: (paused: boolean) => void;
+  isOffline: boolean;
 }
 
 const RealTimeDataContext = createContext<RealTimeDataContextType | undefined>(undefined);
@@ -119,6 +122,9 @@ export const RealTimeDataProvider: React.FC<{ children: ReactNode }> = ({ childr
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isOffline, setIsOffline] = useState(false);
+  const [eventSource, setEventSource] = useState<EventSource | null>(null);
+
   const isPausedRef = React.useRef(false);
 
   const setIsPaused = (paused: boolean) => {
@@ -205,15 +211,15 @@ export const RealTimeDataProvider: React.FC<{ children: ReactNode }> = ({ childr
       setError(null);
 
       const [projects, certificates, experience, skills, settings, socialLinks, pageHeaders, philosophy, animatedTitles] = await Promise.all([
-        fetch('/api/projects').then(res => res.json()),
-        fetch('/api/certificates').then(res => res.json()),
-        fetch('/api/experience').then(res => res.json()),
-        fetch('/api/skills').then(res => res.json()),
-        fetch('/api/settings').then(res => res.json()),
-        fetch('/api/social-links').then(res => res.json()),
-        fetch('/api/page-headers').then(res => res.json()),
-        fetch('/api/philosophy').then(res => res.json()),
-        fetch('/api/animated-titles').then(res => res.json())
+        fetch('/api/projects').then(res => res.ok ? res.json() : Promise.reject('API Down')),
+        fetch('/api/certificates').then(res => res.ok ? res.json() : Promise.reject('API Down')),
+        fetch('/api/experience').then(res => res.ok ? res.json() : Promise.reject('API Down')),
+        fetch('/api/skills').then(res => res.ok ? res.json() : Promise.reject('API Down')),
+        fetch('/api/settings').then(res => res.ok ? res.json() : Promise.reject('API Down')),
+        fetch('/api/social-links').then(res => res.ok ? res.json() : Promise.reject('API Down')),
+        fetch('/api/page-headers').then(res => res.ok ? res.json() : Promise.reject('API Down')),
+        fetch('/api/philosophy').then(res => res.ok ? res.json() : Promise.reject('API Down')),
+        fetch('/api/animated-titles').then(res => res.ok ? res.json() : Promise.reject('API Down'))
       ]);
 
       setData({
@@ -227,11 +233,13 @@ export const RealTimeDataProvider: React.FC<{ children: ReactNode }> = ({ childr
         philosophy,
         animatedTitles
       });
-
-      setLoading(false);
-    } catch (error) {
-      console.error('Failed to fetch initial data:', error);
-      setError('Failed to load data. Please refresh the page.');
+      setIsOffline(false);
+    } catch (e) {
+      console.warn('Backend unavailable, switching to mock data:', e);
+      setData(MOCK_DATA as any);
+      setIsOffline(true);
+      // We don't set a fatal error anymore so the app can render
+    } finally {
       setLoading(false);
     }
   }, []);
@@ -463,7 +471,8 @@ export const RealTimeDataProvider: React.FC<{ children: ReactNode }> = ({ childr
         updateSkill,
         updateSocialLink,
         updateSettings,
-        setIsPaused
+        setIsPaused,
+        isOffline
       }}
     >
       {children}
