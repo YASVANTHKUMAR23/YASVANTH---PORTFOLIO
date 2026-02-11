@@ -1,6 +1,6 @@
-import { supabase } from '../../lib/supabase.js'
-import { setCorsHeaders } from '../../lib/cors.js'
-import { successResponse, errorResponse } from '../../utils/response.js'
+import { supabase } from '../../../lib/supabase.js'
+import { setCorsHeaders } from '../../../lib/cors.js'
+import { successResponse, errorResponse } from '../../../utils/response.js'
 
 export default async function handler(req, res) {
     if (setCorsHeaders(req, res)) return

@@ -4,8 +4,12 @@
     "outputDirectory": "portfolio/dist",
     "rewrites": [
         {
-            "source": "/api/(.*)",
-            "destination": "portfolio-backend/api/$1"
+            "source": "/api/auth/login",
+            "destination": "portfolio-backend/api/auth/login/index.js"
+        },
+        {
+            "source": "/api/:path*",
+            "destination": "portfolio-backend/api/:path*/index.js"
         },
         {
             "source": "/(.*)",
