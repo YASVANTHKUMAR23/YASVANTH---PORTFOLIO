@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "buildCommand": "cd portfolio && npm install && npm run build",
+    "outputDirectory": "portfolio/dist",
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "portfolio-backend/api/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/portfolio/dist/$1"
+        }
+    ],
+    "framework": "vite"
+}

@@ -1,0 +1,14 @@
+{
+    "name": "portfolio-monorepo",
+    "private": true,
+    "scripts": {
+        "dev:frontend": "npm run dev --workspace=portfolio",
+        "dev:backend": "npm run dev --workspace=portfolio-backend",
+        "build": "npm run build --workspace=portfolio",
+        "install:all": "npm install && npm install --workspace=portfolio && npm install --workspace=portfolio-backend"
+    },
+    "workspaces": [
+        "portfolio",
+        "portfolio-backend"
+    ]
+}
