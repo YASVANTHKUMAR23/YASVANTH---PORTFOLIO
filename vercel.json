@@ -5,11 +5,11 @@
     "rewrites": [
         {
             "source": "/api/auth/login",
-            "destination": "portfolio-backend/api/auth/login/index.js"
+            "destination": "/portfolio-backend/api/auth/login/index.js"
         },
         {
             "source": "/api/:path*",
-            "destination": "portfolio-backend/api/:path*/index.js"
+            "destination": "/portfolio-backend/api/:path*/index.js"
         },
         {
             "source": "/(.*)",
