@@ -1,20 +1,6 @@
 {
     "version": 2,
-    "buildCommand": "cd portfolio && npm install && npm run build",
-    "outputDirectory": "portfolio/dist",
-    "rewrites": [
-        {
-            "source": "/api/auth/login",
-            "destination": "/portfolio-backend/api/auth/login/index.js"
-        },
-        {
-            "source": "/api/:path*",
-            "destination": "/portfolio-backend/api/:path*/index.js"
-        },
-        {
-            "source": "/(.*)",
-            "destination": "/portfolio/dist/$1"
-        }
-    ],
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
     "framework": "vite"
 }

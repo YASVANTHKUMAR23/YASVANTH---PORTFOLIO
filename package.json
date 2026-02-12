@@ -1,14 +1,33 @@
 {
-    "name": "portfolio-monorepo",
+    "name": "portfolio-unified",
     "private": true,
+    "version": "1.0.0",
+    "type": "module",
     "scripts": {
-        "dev:frontend": "npm run dev --workspace=portfolio",
-        "dev:backend": "npm run dev --workspace=portfolio-backend",
-        "build": "npm run build --workspace=portfolio",
-        "install:all": "npm install && npm install --workspace=portfolio && npm install --workspace=portfolio-backend"
+        "dev": "concurrently \"node local-api.js\" \"vite\"",
+        "build": "vite build",
+        "preview": "vite preview",
+        "test:db": "node test-supabase.js"
     },
-    "workspaces": [
-        "portfolio",
-        "portfolio-backend"
-    ]
+    "dependencies": {
+        "react": "^19.2.4",
+        "react-dom": "^19.2.4",
+        "lucide-react": "^0.563.0",
+        "react-router-dom": "^7.13.0",
+        "@supabase/supabase-js": "^2.39.0",
+        "dotenv": "^16.3.1",
+        "jsonwebtoken": "^9.0.2",
+        "bcryptjs": "^2.4.3",
+        "express": "^4.18.2",
+        "cors": "^2.8.5"
+    },
+    "devDependencies": {
+        "@types/node": "^22.14.0",
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "@vitejs/plugin-react": "^5.0.0",
+        "concurrently": "^8.2.2",
+        "typescript": "~5.8.2",
+        "vite": "^6.2.0"
+    }
 }
